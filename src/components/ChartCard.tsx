@@ -74,9 +74,10 @@ return <div className="ml-4 mt-4">
 }
 
 export default function ChartCard({ vnode }: ChartCardProps) {
-  return <div className="rounded-xl border border-gray-300 bg-gray-50 p-4 shadow">
-      <h2 className="mb-4 text-xl font-bold">VNode Tree</h2>
-
+  return<div className="h-full rounded-xl border border-gray-300 bg-gray-50 p-4 shadow flex flex-col">
+    <h2 className="mb-4 text-xl font-bold">VNode Tree</h2>
+    <div className="flex-1 overflow-auto pr-2">
       <TreeNode node={vnode} />
     </div>
+  </div>
 }
