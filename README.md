@@ -4,23 +4,13 @@ A small project I built to understand how the Virtual DOM actually works under t
 
 Most frontend developers use React all the time, but a lot of people never really stop to think about what happens between changing state and seeing the UI update on the screen. I wanted to understand that process properly, so I built a simplified Virtual DOM system myself.
 
-The project can:
-
-* Create VNodes using a custom `createElement()` function
-* Render those VNodes into actual DOM elements
-* Compare two Virtual DOM trees
-* Update only the changed parts of the DOM
-* Visualize the VNode tree structure
-* Show the JSON representation of the tree
-* Highlight changed nodes in the tree view
-
 ---
 
 ## Tech Stack
 
-* React
-* TypeScript
-* Tailwind CSS
+- React
+- TypeScript
+- Tailwind CSS
 
 ---
 
@@ -65,26 +55,37 @@ The `render()` function recursively walks through the VNode tree and converts it
 
 ### Diffing Logic
 
-This was probably the most important part of the project.
+The `diff()` function compares an old VDOM tree with a new one and only updates the parts that changed, instead of re-rendering everything.
 
-The `diff()` function compares an old VDOM tree with a new VDOM tree and only updates the parts that changed instead of rerendering everything.
+It currently supports:
 
-Currently it supports:
+- Replacing nodes
+- Updating props
+- Removing props
+- Comparing child nodes recursively
 
-* Replacing nodes
-* Updating props
-* Removing props
-* Comparing child nodes recursively
+It is a basic diffing system and does not support keyed diffing, fragments, or event listeners yet.
 
-It is still a basic diffing system and does not support keyed diffing, fragments, or event listeners yet.
+### Tree Visualization
 
-### Visualization
+The VNode tree is displayed visually so parent-child relationships are easy to follow. Nodes are color-coded based on their diff status:
 
-One part I liked a lot was the tree visualization.
+- **Green** — added
+- **Yellow** — updated
+- **Unchanged** — no decoration
 
-Instead of just printing raw JSON, the project also displays the VNode structure visually in a tree format so it is easier to understand parent-child relationships.
+### Live JSON Editing
 
-There is also color-coded highlighting for updated nodes, which makes it easier to see what changed between two versions of the Virtual DOM.
+The JSON panel is fully editable. You can modify the VNode structure directly and the tree visualization and rendered output update to reflect your changes. Edits are committed on blur, so you can type freely without anything updating mid-keystroke.
+
+### Old Tree View
+
+After any transition between states — whether switching examples or editing the JSON — you can toggle to an Old Tree view. This shows the previous VNode tree with deleted nodes highlighted in red, and nothing from the new tree injected into it.
+
+The two views are intentionally separate:
+
+- **New tree** — shows what exists now, with additions and updates annotated
+- **Old tree** — shows what existed before, with only deletions highlighted
 
 ---
 
@@ -92,34 +93,28 @@ There is also color-coded highlighting for updated nodes, which makes it easier 
 
 This project taught me a lot more than I expected.
 
-The main thing was understanding that the Virtual DOM is really just a tree structure plus comparison logic. Before building this, I knew React used a Virtual DOM, but I did not really understand what that actually meant in practice.
+The main thing was understanding that the Virtual DOM is really just a tree structure plus comparison logic. Before building this, I knew React used a Virtual DOM but I did not really understand what that meant in practice.
 
 I also got more comfortable with:
 
-* Recursive functions
-* Tree traversal
-* DOM manipulation
-* TypeScript type modeling
-* Component design
-* Thinking about how frontend frameworks work internally
+- Recursive functions and tree traversal
+- DOM manipulation
+- TypeScript type modeling
+- Component design
+- Thinking about how frontend frameworks work internally
 
-And honestly, building this made React feel a lot less “magical”.
+Building this made React feel a lot less magical.
 
 ---
 
 ## Possible Improvements
 
-There are still a lot of things I would like to add later:
-
-* Keyed diffing
-* Functional component support
-* Fragment support
-* Event listener handling
-* Side-by-side comparison of old and new trees
-* Better animations for updates
-* Remove node highlighting
-* Performance benchmarking
-* A live deployed demo
+- Keyed diffing
+- Functional component support
+- Fragment support
+- Event listener handling
+- Diff animations
+- Performance benchmarking
 
 ---
 
@@ -136,8 +131,6 @@ Then open the localhost URL shown in the terminal.
 
 ## Why I Built This
 
-I built this because I wanted to go deeper than just using React.
+I wanted to go deeper than just using React.
 
-I think projects are a lot more valuable when they help you understand how something actually works internally, and this project definitely did that for me.
-
-It is not meant to be a full React clone, but it covers the core idea behind how a Virtual DOM system works.
+I think projects are a lot more valuable when they help you understand how something actually works internally, and this one definitely did that. It is not meant to be a full React clone, but it covers the core idea behind how a Virtual DOM system works.
